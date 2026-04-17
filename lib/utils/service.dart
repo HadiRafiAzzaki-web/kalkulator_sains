@@ -1,8 +1,8 @@
 import 'package:kalkulator_sains/logics/logic.dart';
 
-class Sevice {
+class Service {
   //logika perhitungan
-  double hitung({
+  static double hitung({
     required double watt,
     required int jumlah,
     required double tarif,
@@ -13,7 +13,7 @@ class Sevice {
   }
 
   //nyimpan histori
-  Logic buatData({
+  static Logic buatData({
     required double watt,
     required int jumlah,
     required double tarif,

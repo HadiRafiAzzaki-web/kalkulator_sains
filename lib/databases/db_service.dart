@@ -19,13 +19,14 @@ class DbService {
       onCreate: (db, version) async {
         await db.execute('''
         CREATE TABLE history(
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          jumlah REAL,
-          watt REAL,
-          waktu REAL,
-          tarif REAL,
-          hasil REAL
-        )
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  jumlah REAL,
+  watt REAL,
+  waktu REAL,
+  tarif REAL,
+  hasil REAL,
+  kwh REAL
+)
         ''');
       },
     );

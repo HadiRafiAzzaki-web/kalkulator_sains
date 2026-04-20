@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:kalkulator_sains/databases/db_service.dart';
 import 'package:kalkulator_sains/logics/logic.dart';
@@ -19,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final tarifC = TextEditingController();
 
   double hasil = 0;
+  double kwh = 0;
   List<Logic> history = [];
 
   @override
@@ -60,12 +59,12 @@ class _HomeScreenState extends State<HomeScreen> {
       child: TextField(
         controller: c,
         keyboardType: TextInputType.number,
-        style: const TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(color: Colors.grey),
+          labelStyle: TextStyle(color: Colors.grey),
           filled: true,
-          fillColor: const Color(0xFF0f3460),
+          fillColor: Color(0xFF0f3460),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
@@ -102,11 +101,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   input(tarifC, "Tarif"),
                   SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: hitung,
+                    onPressed: () {
+                      setState(() {
+                        hitung();
+                      });
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF4e54c8),
                     ),
-                    child: Text("Hitung"),
+                    child: Text(
+                      "Hitung",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -114,6 +120,10 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20),
             Text(
               "Rp ${hasil.toStringAsFixed(0)}",
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+            Text(
+              "Pemakaian: ${kwh.toStringAsFixed(2)} kWh",
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
             SizedBox(height: 20),
@@ -142,7 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(color: Colors.white),
                   ),
                   subtitle: Text(
-                    "${item.jumlah} | ${item.watt}W | ${item.waktu} jam",
+                    "${item.jumlah} | ${item.watt}W | ${item.waktu} jam\n"
+                    "${item.kwh.toStringAsFixed(2)} kWh",
                     style: TextStyle(color: Colors.grey),
                   ),
                   trailing: IconButton(

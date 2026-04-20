@@ -5,6 +5,7 @@ class Logic {
   final double waktu;
   final double tarif;
   final double hasil;
+  final double kwh;
 
   Logic({
     this.id,
@@ -13,6 +14,7 @@ class Logic {
     required this.waktu,
     required this.tarif,
     required this.hasil,
+    required this.kwh,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +25,7 @@ class Logic {
       'waktu': waktu,
       'tarif': tarif,
       'hasil': hasil,
+      'kwh': kwh,
     };
   }
 
@@ -34,6 +37,7 @@ class Logic {
       waktu: map['waktu'],
       tarif: map['tarif'],
       hasil: map['hasil'],
+      kwh: map['kwh'],
     );
   }
 }

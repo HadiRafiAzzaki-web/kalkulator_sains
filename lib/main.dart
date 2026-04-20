@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalkulator_sains/screens/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,6 +10,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(debugShowCheckedModeBanner: false,home: SplashScreen(),);
   }
 }

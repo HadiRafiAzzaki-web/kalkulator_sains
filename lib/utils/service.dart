@@ -1,36 +1,27 @@
 import 'package:kalkulator_sains/logics/logic.dart';
 
 class Service {
-  //logika perhitungan
   static double hitung({
+    required double jumlah,
     required double watt,
-    required int jumlah,
-    required double tarif,
     required double waktu,
+    required double tarif,
   }) {
-    double kWH = (jumlah * watt * waktu) / 1000;
-    return kWH * tarif;
+    return (jumlah * watt * waktu / 1000) * tarif;
   }
 
-  //nyimpan histori
   static Logic buatData({
+    required double jumlah,
     required double watt,
-    required int jumlah,
-    required double tarif,
     required double waktu,
+    required double tarif,
   }) {
-    double hasil = hitung(
-      watt: watt,
-      jumlah: jumlah,
-      tarif: tarif,
-      waktu: watt,
-    );
     return Logic(
       jumlah: jumlah,
-      tarif: tarif,
       watt: watt,
       waktu: waktu,
-      hasil: hasil,
+      tarif: tarif,
+      hasil: hitung(jumlah: jumlah, watt: watt, waktu: waktu, tarif: tarif),
     );
   }
 }

@@ -19,6 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final waktuC = TextEditingController();
   final tarifC = TextEditingController();
 
+  final formatKwh = NumberFormat('#,##0.00', 'id_ID');
+
   double hasil = 0;
   double kwh = 0;
   bool isWatt = true;
@@ -255,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
             Text(
-              "Pemakaian: ${kwh.toStringAsFixed(2)} kWh",
+              "Pemakaian: ${formatKwh.format(kwh)} kWh",
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
             SizedBox(height: 20),
@@ -285,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   subtitle: Text(
                     "${item.jumlah} | ${item.watt}W | ${item.waktu} jam\n"
-                    "${item.kwh.toStringAsFixed(2)} kWh",
+                    "${formatKwh.format(kwh)} kWh",
                     style: TextStyle(color: Colors.grey),
                   ),
                   trailing: IconButton(

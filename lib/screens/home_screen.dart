@@ -152,12 +152,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     isWatt ? "Mode: Watt" : "Mode: Volt & Ampere",
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color: Colors.white),
                   ),
                   ElevatedButton(
                     onPressed: isWattOrVoltAmpere,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF4e54c8),
+                    ),
                     child: Text(
                       isWatt ? 'Ganti ke Volt/Ampere' : 'Ganti ke Watt',
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                   SizedBox(height: 10),

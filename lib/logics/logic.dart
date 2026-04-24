@@ -1,11 +1,11 @@
 class Logic {
-  final int? id;
-  final double jumlah;
-  final double watt;
-  final double waktu;
-  final double tarif;
-  final double hasil;
-  final double kwh;
+  int? id;
+  double jumlah;
+  double watt;
+  double waktu;
+  double tarif;
+  double hasil;
+  double kwh;
 
   Logic({
     this.id,

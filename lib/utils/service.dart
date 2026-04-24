@@ -1,4 +1,4 @@
-import 'package:kalkulator_sains/logics/logic.dart';
+import '../logics/logic.dart';
 
 class Service {
   static double hitung({
@@ -24,15 +24,13 @@ class Service {
     required double waktu,
     required double tarif,
   }) {
-    double kwh = hitungKwh(jumlah: jumlah, watt: watt, waktu: waktu);
-
     return Logic(
       jumlah: jumlah,
       watt: watt,
       waktu: waktu,
       tarif: tarif,
-      hasil: kwh * tarif,
-      kwh: kwh,
+      hasil: hitung(jumlah: jumlah, watt: watt, waktu: waktu, tarif: tarif),
+      kwh: hitungKwh(jumlah: jumlah, watt: watt, waktu: waktu),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kalkulator_sains/databases/db_service.dart';
 import 'package:kalkulator_sains/logics/logic.dart';
 import 'package:kalkulator_sains/utils/service.dart';
@@ -21,7 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
   double hasil = 0;
   double kwh = 0;
   bool isWatt = true;
+  String? selectedTarif;
   List<Logic> history = [];
+  final Map<String, double> tarifPLN = {
+    "R-1 / 900 VA (Subsidi)": 605,
+    "R-1 / 1300 VA": 1444.7,
+    "R-1 / 2200 VA": 1444.7,
+    "R-2 / 3500-5500 VA": 1699.53,
+    "R-3 / >6600 VA": 1699.53,
+  };
 
   @override
   void initState() {
@@ -61,6 +70,13 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
+    if (selectedTarif == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Pilih tarif PLN dulu")));
+      return;
+    }
+
     final data = Service.buatData(
       jumlah: jumlah,
       watt: hasilWatt,
@@ -91,6 +107,13 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
+    if (selectedTarif == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Pilih tarif PLN dulu")));
+      return;
+    }
+
     final data = Service.buatData(
       jumlah: jumlah,
       watt: watt,
@@ -106,6 +129,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     loadData();
+  }
+
+  String rupiah(double angka) {
+    return NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp. ',
+      decimalDigits: 0,
+    ).format(angka);
   }
 
   Widget input(TextEditingController c, String label) {
@@ -135,7 +166,10 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xFF1a1a2e),
       appBar: AppBar(
         backgroundColor: Color(0xFF1a1a2e),
-        title: Text("Kalkulator Listrik"),
+        title: Text(
+          "Kalkulator Listrik",
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -166,11 +200,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(height: 10),
                   input(jumlahC, "Jumlah Perangkat"),
-                  if (isWatt) input(wattC, "Watt"),
+                  if (isWatt) input(wattC, "Daya(Watt)"),
                   if (!isWatt) input(voltC, "Volt"),
                   if (!isWatt) input(ampC, "Ampere"),
                   input(waktuC, "Waktu penggunaan(per jam)"),
-                  input(tarifC, "Tarif listrik"),
+                  DropdownButtonFormField<String>(
+                    value: selectedTarif,
+                    dropdownColor: Color(0xFF0f3460),
+                    style: TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: "Tarif PLN",
+                      labelStyle: TextStyle(color: Colors.grey),
+                      filled: true,
+                      fillColor: Color(0xFF0f3460),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    items: tarifPLN.keys.map((key) {
+                      return DropdownMenuItem(value: key, child: Text(key));
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedTarif = value;
+                        tarifC.text = tarifPLN[value]
+                            .toString(); // isi otomatis
+                      });
+                    },
+                  ),
                   SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
@@ -193,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 20),
             Text(
-              "Rp ${hasil.toStringAsFixed(0)}",
+              rupiah(hasil),
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
             Text(
@@ -222,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 final item = history[i];
                 return ListTile(
                   title: Text(
-                    "Rp ${item.hasil.toStringAsFixed(0)}",
+                    rupiah(hasil),
                     style: TextStyle(color: Colors.white),
                   ),
                   subtitle: Text(
